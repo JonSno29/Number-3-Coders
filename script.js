@@ -1,45 +1,14 @@
-$(document).ready(function(){
-
-$(function(){
-  $('#search-form').submit(function(event){ // when the user clicks submit....
-    event.preventDefault(); // prevent the form from submitting
-    var searchTerm = $('#query').val(); // take whatever is in the search field and put it in searchTerm
-    getRequest(searchTerm); //call the function "getRequest" and pass it the search term
-  });
-});
-
-function getRequest(searchTerm){
-  var userQuery = searchTerm;
-  //alert(typeof(userQuery));
-  var params = {
-    part: 'snippet',
-    key: 'AIzaSyDzcGkZMyzZt6EBn8jlGBRjexwGkW_m-Zo',
-    q: userQuery,
-    maxResults: 50
-  };
-  url = 'https://www.googleapis.com/youtube/v3/search'
-
-  $.getJSON(url, params, function(data){
-    //debugger;
-    showResults(data.items);
-    
-  });
-}
-
-function showResults(results){ //shows the results to the user
-  var html = ""; // variable to hold the html
-  $.each(results, function(index,items){ //for each of the results
-//debugger;
-    //html += '<p>' + items.snippet.thumbnails.default.url + '</p>'; // create a new paragraph with the title
-    html += '<a href=' + "https://www.youtube.com/watch?v=" + items.id.videoId + '>';
-    html += '<img src=' + items.snippet.thumbnails.default.url + '>'; 
-    html += '</a>';
-
-    //console.log(items.snippet.thumbnails.default.url);
-    console.log(items.id.videoId);
-  });
-  $('#search-results').html(html); // display each of those paragraphs on the page
-}
-
-
-});
+ fetch("https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCb3BgkDN-QVBc-HoW7XdPbA&maxResults=5&order=date&key=AIzaSyDzcGkZMyzZt6EBn8jlGBRjexwGkW_m-Zo")
+.then((result)=>{
+    return result.json()
+}).then((data)=>{
+    console.log(data)
+    let videos = data.items
+    let videoContainer = document.querySelector(".youtube-container")
+    for(video of videos){
+        videoContainer.innerHTML +=  `
+            <img src="${video.snippet.thumbnails.medium.url}"/>
+            `
+        
+    }
+})   
