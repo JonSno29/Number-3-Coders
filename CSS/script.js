@@ -13,7 +13,7 @@ function getRequest(searchTerm){
   //alert(typeof(userQuery));
   var params = {
     part: 'snippet',
-    key: 'AIzaSyDFpwiJk6C7QlJr1PrZ73ukMpMolXO2DSQ',
+    key: 'AIzaSyDzcGkZMyzZt6EBn8jlGBRjexwGkW_m-Zo',
     q: userQuery,
     maxResults: 50
   };
